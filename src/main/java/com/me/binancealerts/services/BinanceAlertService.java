@@ -14,4 +14,5 @@ public interface BinanceAlertService {
     void checkPricesForAllDuos();
     void checkPricesForCoinPair(CoinPair coinPair);
     Set<CoinPair> getAllCoinPairs();
+    void deleteCoinPair(String coin1, String coin2);
 }

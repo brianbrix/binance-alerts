@@ -25,7 +25,7 @@ public class BinanceAlertAPIController {
     public String removePair(@PathVariable String coin1, @PathVariable String coin2) {
         return binanceAlertService.findCoinPair(coin1, coin2)
                 .map(CoinPair -> {
-                    binanceAlertService.getAllCoinPairs().remove(CoinPair);
+                    binanceAlertService.deleteCoinPair(coin1,coin2);
                     return "Removed " + coin1 + "/" + coin2;
                 })
                 .orElse("Pair not found.");

@@ -34,15 +34,18 @@
     <tr>
         <th>Coin 1</th>
         <th>Coin 2</th>
-        <th>Last Price</th>
+        <th>Daily Low</th>
+        <th>Current Price</th>
         <th>Daily High</th>
         <th>Alert</th>
+        <th>Action</th>
     </tr>
     </thead>
     <tbody id="coinTable">
     <tr th:each="coinPair : ${trackedCoins}">
         <td th:text="${coinPair.coin1}"></td>
         <td th:text="${coinPair.coin2}"></td>
+        <td th:text="${coinPair.lowPrice != null ? coinPair.lowPrice : 'N/A'}"></td>
         <td th:text="${coinPair.lastPrice != null ? coinPair.lastPrice : 'N/A'}"></td>
         <td th:text="${coinPair.highPrice != null ? coinPair.highPrice : 'N/A'}"></td>
         <td>
@@ -55,7 +58,8 @@
         </td>
         <td>
             <button class="btn btn-danger btn-delete" onclick="deleteCoin('${coinDuo.coin1}', '${coinDuo.coin2}')">🗑Delete</button>
-        </td>    </tr>
+        </td>
+    </tr>
     </tbody>
 </table>
 

@@ -20,6 +20,7 @@ public class CoinPair {
     private String coin1;
     private String coin2;
     private Double highPrice;
+    private Double lowPrice;
     private Double lastPrice;
 
 
@@ -52,6 +53,13 @@ public class CoinPair {
         this.lastPrice = lastPrice;
     }
 
+    public Double getLowPrice() {
+        return lowPrice;
+    }
+
+    public void setLowPrice(Double lowPrice) {
+        this.lowPrice = lowPrice;
+    }
     @Override
     public String toString() {
         return "CoinPair{" +
@@ -62,4 +70,6 @@ public class CoinPair {
                 ", lastPrice=" + lastPrice +
                 '}';
     }
+
+
 }

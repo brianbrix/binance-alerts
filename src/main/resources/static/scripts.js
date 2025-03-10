@@ -3,6 +3,12 @@ document.addEventListener("DOMContentLoaded", function () {
     refreshData(all_api);
 });
 
+function refresh() {
+    refreshData(all_api);
+    setTimeout(refresh, 60000);
+}
+
+refresh()
 // Add a Coin Pair
 document.getElementById("addCoinForm").addEventListener("submit", function (event) {
     event.preventDefault();
@@ -47,9 +53,13 @@ function refreshData(api, all=true) {
                 let row = `<tr>
                     <td>${CoinPair.coin1}</td>
                     <td>${CoinPair.coin2}</td>
+                    <td>${CoinPair.lowPrice ? CoinPair.lowPrice : 'N/A'}</td>
                     <td>${CoinPair.lastPrice ? CoinPair.lastPrice : 'N/A'}</td>
                     <td>${CoinPair.highPrice ? CoinPair.highPrice : 'N/A'}</td>
                     <td>${CoinPair.lastPrice >= CoinPair.highPrice ? '<span class="text-danger">🚨 New High!</span>' : '<span class="text-success">✅ Normal</span>'}</td>
+                      <td>
+            <button class="btn btn-danger btn-delete" onclick="deleteCoin('${CoinPair.coin1}', '${CoinPair.coin2}')">🗑Delete</button>
+        </td>
                 </tr>`;
                 tableBody.innerHTML += row;
             });

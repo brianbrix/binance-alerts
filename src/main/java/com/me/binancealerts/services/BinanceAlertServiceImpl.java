@@ -4,7 +4,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.me.binancealerts.entities.CoinPair;
 import com.me.binancealerts.repos.CoinPairRepo;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -16,7 +18,7 @@ import java.util.Set;
 
 @Service
 public class BinanceAlertServiceImpl implements BinanceAlertService {
-    private static final Logger logger = org.slf4j.LoggerFactory.getLogger(BinanceAlertServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(BinanceAlertServiceImpl.class);
     private final CoinPairRepo coinPairRepo;
     private final RestTemplate restTemplate = new RestTemplate();
     private static final String BINANCE_API_URL = "https://api.binance.com/api/v3/ticker/24hr?symbol=";
@@ -69,9 +71,11 @@ public class BinanceAlertServiceImpl implements BinanceAlertService {
 
             double lastPrice = jsonNode.get("lastPrice").asDouble();
             double highPrice = jsonNode.get("highPrice").asDouble();
+            double lowPrice = jsonNode.get("lowPrice").asDouble();
 
             coinPair.setLastPrice(lastPrice);
             coinPair.setHighPrice(highPrice);
+            coinPair.setLowPrice(lowPrice);
             coinPairRepo.save(coinPair);
             logger.info("Saved data for {}: lastPrice={}, highPrice={}", symbol, lastPrice, highPrice);
             if (lastPrice >= highPrice) {
@@ -86,5 +90,11 @@ public class BinanceAlertServiceImpl implements BinanceAlertService {
     @Override
     public Set<CoinPair> getAllCoinPairs() {
         return new HashSet<>(coinPairRepo.findAll());
+    }
+
+    @Transactional
+    @Override
+    public void deleteCoinPair(String coin1, String coin2) {
+        coinPairRepo.deleteCoinPairByCoin1AndCoin2(coin1,coin2);
     }
 }

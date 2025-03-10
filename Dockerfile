@@ -28,5 +28,8 @@ COPY --from=build /app/target/binance-alerts-0.0.1.jar app.jar
 # Expose the port
 EXPOSE 8080
 
+ENV SPRING_APPLICATION_JSON='{"server.address":"0.0.0.0"}'
+
+
 # Run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
