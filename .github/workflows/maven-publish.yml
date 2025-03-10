@@ -7,14 +7,14 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write  # Modify to allow pushing contents to the repository
       packages: write
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -44,3 +44,21 @@ jobs:
         run: mvn deploy -s ~/.m2/settings.xml
         env:
           GITHUB_TOKEN: ${{ github.token }}
+
+      # Step to upload the target folder to the repository
+      - name: Upload target folder to GitHub repository
+        run: |
+          # Ensure that git user information is set up
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+
+          # Add the target folder to the repository
+          git add target/
+
+          # Commit the changes
+          git commit -m "Add target folder with build artifacts"
+
+          # Push the changes to the main branch
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
