@@ -23,7 +23,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy the packaged JAR file from the build image
-COPY --from=build /app/target/your-application.jar app.jar
+COPY --from=build /app/targetbinance-alerts-0.0.1.jar app.jar
 
 # Expose the port
 EXPOSE 8080
