@@ -39,7 +39,6 @@ jobs:
               </server>
             </servers>
           </settings>" > ~/.m2/settings.xml
-
       - name: Publish to GitHub Packages Apache Maven
         run: mvn deploy -s ~/.m2/settings.xml
         env:
