@@ -34,6 +34,7 @@ public class BinanceAlertServiceImpl implements BinanceAlertService {
             coinPair.setCoin1(coin1);
             coinPair.setCoin2(coin2);
             coinPairRepo.save(coinPair);
+            checkPricesForCoinPair(coinPair);
             return coinPair;
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Already exists");
@@ -72,7 +73,11 @@ public class BinanceAlertServiceImpl implements BinanceAlertService {
             double lastPrice = jsonNode.get("lastPrice").asDouble();
             double highPrice = jsonNode.get("highPrice").asDouble();
             double lowPrice = jsonNode.get("lowPrice").asDouble();
+            if (coinPair.getLastPrice()!=null)
+            {
+                coinPair.setPriceChange(lastPrice - coinPair.getLastPrice());
 
+            }
             coinPair.setLastPrice(lastPrice);
             coinPair.setHighPrice(highPrice);
             coinPair.setLowPrice(lowPrice);

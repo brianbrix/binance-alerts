@@ -37,6 +37,7 @@
         <th>Daily Low</th>
         <th>Current Price</th>
         <th>Daily High</th>
+        <th>Price Change</th>
         <th>Alert</th>
         <th>Action</th>
     </tr>
@@ -48,6 +49,9 @@
         <td th:text="${coinPair.lowPrice != null ? coinPair.lowPrice : 'N/A'}"></td>
         <td th:text="${coinPair.lastPrice != null ? coinPair.lastPrice : 'N/A'}"></td>
         <td th:text="${coinPair.highPrice != null ? coinPair.highPrice : 'N/A'}"></td>
+        <td>
+            <span th:class="${coinPair.priceChange < 0} ? 'text-danger' : 'text-success'" th:text="${coinPair.priceChange}"></span>
+        </td>
         <td>
                     <span th:if="${coinPair.lastPrice != null && coinPair.lastPrice >= coinPair.highPrice}" class="text-danger">
                         🚨 New High!

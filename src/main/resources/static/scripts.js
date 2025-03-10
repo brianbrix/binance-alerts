@@ -50,13 +50,22 @@ function refreshData(api, all=true) {
             tableBody.innerHTML = ""; // Clear table before updating
 
             data.forEach(CoinPair => {
+                let cls = 'text-danger';
+                if (CoinPair.priceChange >= 0) {
+                    cls = 'text-success';
+                }
                 let row = `<tr>
                     <td>${CoinPair.coin1}</td>
                     <td>${CoinPair.coin2}</td>
                     <td>${CoinPair.lowPrice ? CoinPair.lowPrice : 'N/A'}</td>
                     <td>${CoinPair.lastPrice ? CoinPair.lastPrice : 'N/A'}</td>
                     <td>${CoinPair.highPrice ? CoinPair.highPrice : 'N/A'}</td>
-                    <td>${CoinPair.lastPrice >= CoinPair.highPrice ? '<span class="text-danger">🚨 New High!</span>' : '<span class="text-success">✅ Normal</span>'}</td>
+                        
+            <td>
+            <span class="${cls}">${CoinPair.priceChange}</span>
+            </td>  
+                        
+             <td>${CoinPair.lastPrice >= CoinPair.highPrice ? '<span class="text-danger">🚨 New High!</span>' : '<span class="text-success">✅ Normal</span>'}</td>
                       <td>
             <button class="btn btn-danger btn-delete" onclick="deleteCoin('${CoinPair.coin1}', '${CoinPair.coin2}')">🗑Delete</button>
         </td>

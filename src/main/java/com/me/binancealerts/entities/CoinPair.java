@@ -22,6 +22,7 @@ public class CoinPair {
     private Double highPrice;
     private Double lowPrice;
     private Double lastPrice;
+    private Double priceChange=0.0;
 
 
     public String getCoin1() {
@@ -72,4 +73,11 @@ public class CoinPair {
     }
 
 
+    public Double getPriceChange() {
+        return priceChange;
+    }
+
+    public void setPriceChange(Double priceChange) {
+        this.priceChange = priceChange;
+    }
 }
